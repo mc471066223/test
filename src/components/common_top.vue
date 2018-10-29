@@ -12,7 +12,18 @@
                         <span class='iconfont icon-fs_2017101603icon'></span>
                         <span class="top_help_font">{{topHelp}}</span>
                     </router-link> 
-                    <topHelpMpre></topHelpMpre>
+                    <topHelpMore :phone='topHelpPhone'></topHelpMore>
+                </div>
+
+                <div class="top_main_right_line"></div>
+
+                <div class="top_main_right_country">
+                    <span class="top_main_right_country_flag" :class="topFlag"></span>
+                    <span class="top_main_right_country_name">{{topCountryName}}</span>
+                    <span class='top_main_right_country_line'>/</span>
+                    <span class="top_main_right_country_currency">$ USD</span>
+                    <span class="iconfont icon-fs_2016icon-downarrow"></span>
+                    <topCountryCurrencyChoose></topCountryCurrencyChoose>
                 </div>
             </div>
         </div>
@@ -23,7 +34,8 @@
 
 <script>
 import '../assets/common_top.css'
-import topHelpMpre from '@/components/top_help_more'
+import topHelpMore from '@/components/top_help_more'
+import topCountryCurrencyChoose from '@/components/top_country_currency_choose'
 
 export default {
     name:'commonTop',
@@ -31,7 +43,10 @@ export default {
         return {
             site : '',
             topShipping : '',
-            topHelp : 'Need Help?'
+            topHelp : 'Need Help?',
+            topFlag : 'cn',
+            topCountryName : 'China',
+            topHelpPhone : ''
         }
     },
     mounted:function(){
@@ -42,12 +57,13 @@ export default {
             console.log(res)
             this.site = res.data.site_code;
             this.topShipping = res.data.free_str;
+            this.topHelpPhone = res.data.header_phone;
         }).then(res =>{
             console.log(res)
         });
     },
     components:{
-        topHelpMpre
+        topHelpMore,topCountryCurrencyChoose
     }
 }
 </script>

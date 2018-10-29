@@ -20,7 +20,7 @@
             <div class="top_right_help_more_main_con phone">
                 <span class="iconfont icon-fs_2016icon-phone"></span>
                 <h2 class="top_right_help_more_main_con_tit">Want to call?</h2>
-                <p class="top_right_help_more_main_con_txt">+1 (877) 205 5306 (PST) <br />+1 (888) 468 7419 (EST)</p>
+                <p class="top_right_help_more_main_con_txt" v-html="phone"></p>
             </div>
         </div>
     </div>
@@ -28,6 +28,7 @@
 
 <script>
 export default {
-    name : 'topHelpMore'
+    name : 'topHelpMore',
+    props:['phone']
 }
 </script>
