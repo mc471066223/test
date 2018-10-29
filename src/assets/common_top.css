@@ -180,3 +180,30 @@
     margin-bottom: 10px;
     line-height: initial;
 }
+.top_right_country_choose{
+    height: 38px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    border: solid 1px #dddddd;
+    position: relative;
+}
+.top_right_country_choose em{
+    background-image: url(./images/country.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 15px;
+    top: 10px;
+}
+.top_right_country_choose_name{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    left: 0;
+    text-indent: 36px;
+    line-height: 38px;
+    color: #333;
+    font-size: 13px;
+}
