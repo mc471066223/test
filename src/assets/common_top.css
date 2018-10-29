@@ -1,0 +1,118 @@
+.top{
+    width: 100%;
+    background-color: #f7f8f9;
+    height: 38px;
+}
+.top_main{
+    width: 1420px;
+    margin: 0 auto;
+    height: 100%;
+}
+.top_main_left{
+    float: left;
+}
+.top_main_left_toabout,.top_main_left_shipping{
+    float: left;
+    font-size: 12px;
+    line-height: 38px;
+    text-decoration: none;
+    color: #707473;
+    margin-right: 30px;
+}
+.top_main_left_shipping{
+    margin-right: 0
+}
+.top_main_right{
+    float: right;
+}
+.top_main_right_help{
+    float: right;
+    position: relative;
+    height: 38px;
+}
+.top_main_right_help>a .iconfont {
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+.top_main_right_help>a .top_help_font{
+    display: inline-block;
+    font-size: 13px;
+}
+.top_main_right_help>a{
+    font-size: 13px;
+    display: inline-block;
+    line-height: 38px;
+    color: #707473;
+}
+.top_main_right_help:hover .top_right_help_more{
+    display: block;
+}
+.top_right_help_more{
+    position: absolute;
+    background-color: #fff;
+    top: 38px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 210px;
+    padding: 0 15px;
+    box-shadow: 0px 1px 8px 0 rgba(120,102,102,.3);
+    border-radius: 2px;
+    border: none;
+    display: none;
+}
+.top_right_help_more_arrow{
+    left: 50%;
+    margin-left: -9px;
+    position: absolute;
+    top: -8px;
+    width: 18px;
+    height: 9px;
+    background: url(./images/index_icon.png) -52px -6px no-repeat;
+}
+.top_right_help_more_main{
+    padding: 15px 0
+}
+.top_right_help_more_main_con{
+    line-height: initial;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+.top_right_help_more_main_con .iconfont{
+    font-size: 20px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 30px;
+}
+.top_right_help_more_main_con_tit{
+    font-size: 14px;
+    color: #333;
+    font-weight: 400;
+    padding-top: 2px;
+}
+.top_right_help_more_main_con_href{
+    display: inline-block;
+    margin-top: 5px;
+    color: #0681d3 !important;
+    font-size: 13px;
+    text-decoration: none
+}
+.top_right_help_more_main_con_href:hover{
+    text-decoration: underline
+}
+.top_right_help_more_main_con.other{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.top_right_help_more_main_con.phone{
+    border-bottom: none;
+    padding-bottom: 0;
+}
+.top_right_help_more_main_con_txt{
+    display: inline-block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    line-height: 18px;
+}
