@@ -4,21 +4,188 @@
         <div class="top_right_country_more_main">
             <h2 class="top_right_country_more_main_tit">Country/Region</h2>
             <div class="top_right_country_choose">
-                <em :class="flag"></em>
-                <p class="top_right_country_choose_name">{{countryName}}</p>
+                <em :class="defaultCountryCode"></em>
+                <p class="top_right_country_choose_name" @click="showCountryList" :class='{"show":isShow}'>{{defaultCountryName}}</p>
+                <span class="showMore iconfont icon-fs_2016icon-downarrow"></span>
+            </div>
+            <div class="top_right_country_more_main_list" :class="{'close':isClose}" id='countryList'>
+                <div class="top_right_country_more_main_list_main">
+                    <div class="top_right_country_more_main_list_search">
+                        <input type="text" placeholder="Search your country/region">
+                        <span class="iconfont search-icon icon-fs_2017090501icon-search"></span>
+                    </div>
+                    <ul>
+                        <li v-for="(country , index) in allCountry" :key="index">
+                            <a href="javascript:;" @click="changeCountry(country)">
+                                <em :class='country.code'></em>
+                                {{country.name}}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import {mapState , mapMutations , mapActions} from 'vuex'
+
 export default {
     name:'topCountryCurrencyChoose',
     data(){
         return {
-            flag : 'cn',
-            countryName : 'China'
+            isShow:true,
+            isClose:false
         }
+    },computed:{
+        ...mapState(['defaultCountryName','defaultCountryCode','allCountry'])
+    },
+    methods:{
+        showCountryList(){
+            this.isShow = !this.isShow;
+            this.isClose = !this.isClose;
+        },
+        changeCountry(country){
+            this.$store.dispatch('changeDefaultCountry',country).then(()=>{
+                this.showCountryList()
+            })
+        }
+        // ...mapMutations(['changeDefaultCountry'])
     }
 }
 </script>
+
+<style scoped>
+.top_right_country_more{
+    width: 300px;
+    position: absolute;
+    left: 50%;
+    margin-left: -150px;
+    top: 38px;
+    box-shadow: 0px 1px 8px 0 rgba(120,102,102,.3);
+    border: none;
+    background: #fff;
+    border-radius: 3px;
+    height: initial;
+    /* display: none; */
+}
+.top_right_country_more_main{
+    padding: 0 20px 25px;
+    cursor: default;
+}
+.top_right_country_more_main_tit{
+    font-size: 13px;
+    color: #666;
+    font-weight: 400;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    line-height: initial;
+}
+.top_right_country_choose{
+    height: 38px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    border: solid 1px #dddddd;
+    position: relative;
+}
+.top_right_country_choose em{
+    background-image: url(../assets/images/country.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 15px;
+    top: 10px;
+}
+.top_right_country_choose_name{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    left: 0;
+    text-indent: 36px;
+    line-height: 38px;
+    color: #333;
+    font-size: 13px;
+}
+.showMore{
+    float: right;
+    width: 20px;
+    height: 20px;
+    margin: 13px 0 0;
+    background: none;
+    color: #aaa;
+    font-size: 12px;
+    line-height: 16px;
+}
+.top_right_country_more_main_list{
+    transition: all .5s;
+    height: 231px;
+    overflow: hidden;
+    /* display: none; */
+}
+.top_right_country_more_main_list_main{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 0px 0px 2px 2px;
+    border: solid 1px #dddddd;
+    border-top: none;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    position: relative;
+}
+.top_right_country_more_main_list.close{
+    height: 0;
+}
+.top_right_country_more_main_list_search{
+    position: relative;
+}
+.top_right_country_more_main_list_search input{
+    width: 100%;
+    height: 34px;
+    background-color: #f7f8f9;
+    text-indent: 10px;
+    font-size: 13px;
+    color: #333;
+    border: none;
+    -webkit-appearance: none;
+    outline: none;
+}
+.search-icon{
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    font-size: 14px;
+    color: #333;
+    line-height: initial;
+}
+.top_right_country_more_main_list ul{
+    height: 160px;
+    overflow-y: scroll;
+    margin-top: 10px;
+}
+.top_right_country_more_main_list ul li{
+    margin-bottom: 15px;
+}
+.top_right_country_more_main_list ul li a{
+    display: block;
+    position: relative;
+    line-height: 20px;
+    padding-left: 24px;
+    color: #333;
+    text-decoration: none
+}
+.top_right_country_more_main_list ul li a:hover{
+    text-decoration: underline
+}
+.top_right_country_more_main_list ul li a em{
+    background-image: url(../assets/images/country.png);
+    background-repeat: no-repeat;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 0;
+    top: 2px;
+}
+</style>

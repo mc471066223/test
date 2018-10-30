@@ -18,10 +18,10 @@
                 <div class="top_main_right_line"></div>
 
                 <div class="top_main_right_country">
-                    <span class="top_main_right_country_flag" :class="topFlag"></span>
-                    <span class="top_main_right_country_name">{{topCountryName}}</span>
+                    <span class="top_main_right_country_flag" :class="IPcode"></span>
+                    <span class="top_main_right_country_name">{{IPcountry}}</span>
                     <span class='top_main_right_country_line'>/</span>
-                    <span class="top_main_right_country_currency">$ USD</span>
+                    <span class="top_main_right_country_currency">{{IPcurrency}}</span>
                     <span class="iconfont icon-fs_2016icon-downarrow"></span>
                     <topCountryCurrencyChoose></topCountryCurrencyChoose>
                 </div>
@@ -36,6 +36,8 @@
 import '../assets/common_top.css'
 import topHelpMore from '@/components/top_help_more'
 import topCountryCurrencyChoose from '@/components/top_country_currency_choose'
+import store from '@/vuex/store'
+import {mapState} from 'vuex'
 
 export default {
     name:'commonTop',
@@ -44,8 +46,6 @@ export default {
             site : '',
             topShipping : '',
             topHelp : 'Need Help?',
-            topFlag : 'cn',
-            topCountryName : 'China',
             topHelpPhone : ''
         }
     },
@@ -64,6 +64,9 @@ export default {
     },
     components:{
         topHelpMore,topCountryCurrencyChoose
-    }
+    },
+    computed:{
+        ...mapState(['IPcountry','IPcode','IPcurrency'])
+    },store
 }
 </script>
