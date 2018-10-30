@@ -24,6 +24,23 @@
                     </ul>
                 </div>
             </div>
+
+            <h2 class="top_right_country_more_main_tit">Language/Currency</h2>
+            <div class="top_right_currency_choose">
+                <p class="top_right_currency_choose_name" :class="{'show':curIsShow}" @click='showCurrencyList'>
+                    <span>{{defaultLanguage}}</span> / <em>{{defaultCurrency}}</em>
+                </p>
+                <span class="showMore iconfont icon-fs_2016icon-downarrow"></span>
+            </div>
+            <div class="top_right_currency_more_main_list" :class="{'close':curIsClose}" id='currencyList'>
+                <div class="top_right_currency_more_main_list_main">
+                    <ul>
+                        <li v-for="(cur , j) in allCountry" :key="j">
+                            <span>{{cur.lc.language}}</span> / <em>{{cur.lc.currency}}</em>
+                        </li>
+                    </ul>
+                </div>
+            </div>   
         </div>
     </div>
 </template>
@@ -36,15 +53,25 @@ export default {
     data(){
         return {
             isShow:true,
-            isClose:false
+            isClose:false,
+            curIsClose:true,
+            curIsShow:false
         }
     },computed:{
-        ...mapState(['defaultCountryName','defaultCountryCode','allCountry'])
+        ...mapState(['defaultCountryName','defaultCountryCode','allCountry','defaultLanguage','defaultCurrency'])
     },
     methods:{
         showCountryList(){
             this.isShow = !this.isShow;
             this.isClose = !this.isClose;
+        },
+        showCurrencyList(){
+            let oCurrencyList = document.getElementById('currencyList');
+            let length = oCurrencyList.getElementsByTagName('li').length;
+            let oHeight = length * 30 + 13;
+            oCurrencyList.style.height = oHeight + 'px';
+            this.curIsShow = !this.curIsShow;
+            this.curIsClose = !this.curIsClose;
         },
         changeCountry(country){
             this.$store.dispatch('changeDefaultCountry',country).then(()=>{
@@ -82,7 +109,7 @@ export default {
     margin-bottom: 10px;
     line-height: initial;
 }
-.top_right_country_choose{
+.top_right_country_choose,.top_right_currency_choose{
     height: 38px;
     background-color: #ffffff;
     border-radius: 2px;
@@ -98,7 +125,7 @@ export default {
     left: 15px;
     top: 10px;
 }
-.top_right_country_choose_name{
+.top_right_country_choose_name,.top_right_currency_choose_name{
     position: absolute;
     width: 100%;
     height: 100%;
@@ -108,6 +135,9 @@ export default {
     line-height: 38px;
     color: #333;
     font-size: 13px;
+}
+.top_right_currency_choose_name{
+    text-indent: 15px;
 }
 .showMore{
     float: right;
@@ -125,7 +155,14 @@ export default {
     overflow: hidden;
     /* display: none; */
 }
-.top_right_country_more_main_list_main{
+.top_right_currency_more_main_list{
+    transition: all .5s;
+    overflow: hidden;
+}
+.top_right_currency_more_main_list.close{
+    height: 0 !important;
+}
+.top_right_country_more_main_list_main,.top_right_currency_more_main_list_main{
     width: 100%;
     background-color: #fff;
     border-radius: 0px 0px 2px 2px;
@@ -188,4 +225,25 @@ export default {
     left: 0;
     top: 2px;
 }
+.top_right_currency_choose_name span{
+    float: none;
+}
+.top_right_currency_choose_name em{
+    font-style: normal
+}
+.top_right_currency_more_main_list_main li{
+    line-height: 20px;
+    text-indent: 2px;
+    color: #333;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.top_right_currency_more_main_list_main li:last-child{
+    margin-bottom: 0
+}
+.top_right_currency_more_main_list_main li span{
+    float: none
+}
+
 </style>

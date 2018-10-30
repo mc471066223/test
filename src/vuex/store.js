@@ -10,6 +10,7 @@ const state = {
     defaultCountryName : 'china',
     defaultCountryCode : 'cn',
     defaultCurrency : '$ USD',
+    defaultLanguage : 'Englisg',
     allCountry:[
         {
             name : 'United States',
@@ -95,7 +96,7 @@ const getters = {
 
 const actions = {
     changeDefaultCountry({commit} , newContent){
-        commit('CHANGE_COUNTRY_CODE',newContent)
+        commit('CHANGE_COUNTRY_CODE',newContent);
     }
 }
 
