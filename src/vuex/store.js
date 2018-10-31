@@ -11,6 +11,11 @@ const state = {
     defaultCountryCode : 'cn',
     defaultCurrency : '$ USD',
     defaultLanguage : 'Englisg',
+    currencyResult : [{
+        language : 'English',
+        currency : '$ USD'
+    }],
+    searchCountryResult : [],
     allCountry:[
         {
             name : 'United States',
@@ -87,6 +92,25 @@ const mutations = {
     CHANGE_COUNTRY_CODE(state,data){
         state.defaultCountryName = data.name;
         state.defaultCountryCode = data.code;
+        state.defaultCurrency = data.lc[0].currency;
+        state.defaultLanguage = data.lc[0].language;
+        for(let i = 0;i < state.allCountry.length;i++){
+            if(state.allCountry[i].code == data.code){
+                state.currencyResult = state.allCountry[i].lc;
+            }
+        }
+    },
+    SEARCH_COUNTRY(state , data){
+        state.searchCountryResult = [];
+        for(let i = 0;i < state.allCountry.length;i++){
+            if(state.allCountry[i].name.toUpperCase().indexOf(data.toUpperCase()) != -1){
+                
+                state.searchCountryResult.push(state.allCountry[i])
+            }
+        }
+        console.log(state.searchCountryResult)
+        return state.searchCountryResult;
+        
     }
 }
 
@@ -97,7 +121,11 @@ const getters = {
 const actions = {
     changeDefaultCountry({commit} , newContent){
         commit('CHANGE_COUNTRY_CODE',newContent);
+    },
+    searchCountry({commit} , words){
+        commit('SEARCH_COUNTRY',words)
     }
+
 }
 
 export default new Vuex.Store({

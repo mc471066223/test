@@ -11,11 +11,19 @@
             <div class="top_right_country_more_main_list" :class="{'close':isClose}" id='countryList'>
                 <div class="top_right_country_more_main_list_main">
                     <div class="top_right_country_more_main_list_search">
-                        <input type="text" placeholder="Search your country/region">
+                        <input type="text" placeholder="Search your country/region" v-model="searchWords" @keyup="searchCountryfn(searchWords)">
                         <span class="iconfont search-icon icon-fs_2017090501icon-search"></span>
                     </div>
-                    <ul>
+                    <ul v-show="searchShow">
                         <li v-for="(country , index) in allCountry" :key="index">
+                            <a href="javascript:;" @click="changeCountry(country)">
+                                <em :class='country.code'></em>
+                                {{country.name}}
+                            </a>
+                        </li>
+                    </ul>
+                    <ul v-show="!searchShow">
+                        <li v-for="(country , index) in searchCountryResult" :key="index">
                             <a href="javascript:;" @click="changeCountry(country)">
                                 <em :class='country.code'></em>
                                 {{country.name}}
@@ -35,12 +43,14 @@
             <div class="top_right_currency_more_main_list" :class="{'close':curIsClose}" id='currencyList'>
                 <div class="top_right_currency_more_main_list_main">
                     <ul>
-                        <li v-for="(cur , j) in allCountry" :key="j">
-                            <span>{{cur.lc.language}}</span> / <em>{{cur.lc.currency}}</em>
+                        <li v-for="(cur , j) in currencyResult" :key="j">
+                            <span>{{cur.language}}</span> / <em>{{cur.currency}}</em>
                         </li>
                     </ul>
                 </div>
             </div>   
+
+            <a href="javascript:;" class="top_right_country_more_save">Save</a>
         </div>
     </div>
 </template>
@@ -55,15 +65,18 @@ export default {
             isShow:true,
             isClose:false,
             curIsClose:true,
-            curIsShow:false
+            curIsShow:false,
+            searchWords : '',
+            searchShow : true
         }
     },computed:{
-        ...mapState(['defaultCountryName','defaultCountryCode','allCountry','defaultLanguage','defaultCurrency'])
+        ...mapState(['defaultCountryName','defaultCountryCode','allCountry','defaultLanguage','defaultCurrency','currencyResult','searchCountryResult'])
     },
     methods:{
         showCountryList(){
             this.isShow = !this.isShow;
             this.isClose = !this.isClose;
+            this.curIsClose = true;
         },
         showCurrencyList(){
             let oCurrencyList = document.getElementById('currencyList');
@@ -77,8 +90,26 @@ export default {
             this.$store.dispatch('changeDefaultCountry',country).then(()=>{
                 this.showCountryList()
             })
+        },
+        searchCountryfn(){
+            this.$store.dispatch('searchCountry',this.searchWords).then(()=>{
+                if(this.searchWords == ""){
+                    this.searchShow = true
+                }else{
+                    this.searchShow = false
+                }
+            });
+        },
+        mouseOverDoc(){
+            document.onmouseover = (e) => {
+                var target = e.target;
+                // console.log(target.closest())
+            }
         }
         // ...mapMutations(['changeDefaultCountry'])
+    },
+    mounted:function(){
+        this.mouseOverDoc()
     }
 }
 </script>
@@ -239,11 +270,35 @@ export default {
     cursor: pointer;
     margin-bottom: 10px;
 }
+.top_right_currency_more_main_list_main li:hover{
+    text-decoration: underline
+}
 .top_right_currency_more_main_list_main li:last-child{
     margin-bottom: 0
 }
 .top_right_currency_more_main_list_main li span{
     float: none
+}
+.top_right_currency_more_main_list_main li em{
+    font-style: normal
+}
+.top_right_country_more_save{
+    display: block;
+    height: 38px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    border: solid 1px #565656;
+    transition: all .3s;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 36px;
+    color: #333;
+    margin-top: 15px;
+}
+.top_right_country_more_save:hover{
+    text-decoration: none;
+    background-color: #565656;
+    color: #fff;
 }
 
 </style>
