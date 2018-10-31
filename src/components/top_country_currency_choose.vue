@@ -1,5 +1,5 @@
 <template>
-    <div class="top_right_country_more">
+    <div class="top_right_country_more" id='country-currency-choose'>
         <div class="top_right_country_more_arrow"></div>
         <div class="top_right_country_more_main">
             <h2 class="top_right_country_more_main_tit">Country/Region</h2>
@@ -102,8 +102,25 @@ export default {
         },
         mouseOverDoc(){
             document.onmouseover = (e) => {
-                var target = e.target;
-                // console.log(target.closest())
+                function closest(el, selector) {
+                    var matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+
+                    while (el) {
+                        if (matchesSelector.call(el, selector)) {
+                            break;
+                        }
+                        el = el.parentElement;
+                    }
+                    return el;
+                };
+                var target = e.target || Event.srcElement;
+                //console.log(target.closest('.top_main_right_help'));
+                if(target.closest('.top_main_right_help') != null ){
+                    document.getElementById('country-currency-choose').style.display = 'none';
+                }
+                if(target.closest('.top_main_right_country') != null ){
+                    document.getElementById('country-currency-choose').style.display = 'block';
+                }
             }
         }
         // ...mapMutations(['changeDefaultCountry'])
@@ -126,7 +143,7 @@ export default {
     background: #fff;
     border-radius: 3px;
     height: initial;
-    /* display: none; */
+    display: none;
 }
 .top_right_country_more_main{
     padding: 0 20px 25px;
@@ -300,5 +317,4 @@ export default {
     background-color: #565656;
     color: #fff;
 }
-
 </style>
