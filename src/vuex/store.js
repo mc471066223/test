@@ -111,11 +111,33 @@ const mutations = {
         console.log(state.searchCountryResult)
         return state.searchCountryResult;
         
+    },
+    CHANGE_LANGUAGE_CURRENCY(state,data){
+        state.defaultLanguage = data.language;
+        state.defaultCurrency = data.currency;
+    },
+    SAVE_COUNTRY_LANGUAGE_CURRENCY(state){
+        state.IPcode = state.defaultCountryCode;
+        state.IPcountry = state.defaultCountryName;
+        state.IPcurrency = state.defaultCurrency;
+        var countryInformation = [state.IPcode,state.IPcountry,state.IPcurrency];
+        if(localStorage.getItem('countryInformation') != null){
+            localStorage.removeItem('countryInformation');
+        };
+        localStorage.setItem('countryInformation',countryInformation)
+    },
+    getCountryInformation : function(state){
+        if(localStorage.getItem('countryInformation') != null){
+            var cccInformation = localStorage.getItem('countryInformation').split(',');
+            state.IPcode = cccInformation[0];
+            state.IPcountry = cccInformation[1];
+            state.IPcurrency = cccInformation[2];
+        }
     }
 }
 
 const getters = {
-
+    
 }
 
 const actions = {
@@ -124,8 +146,16 @@ const actions = {
     },
     searchCountry({commit} , words){
         commit('SEARCH_COUNTRY',words)
+    },
+    changeDefaultLanguage({commit} , newContent){
+        commit('CHANGE_LANGUAGE_CURRENCY',newContent)
+    },
+    saveCLC({commit}){
+        commit('SAVE_COUNTRY_LANGUAGE_CURRENCY');
+    },
+    readCLC({commit}){
+        commit('getCountryInformation');
     }
-
 }
 
 export default new Vuex.Store({
