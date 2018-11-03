@@ -132,6 +132,11 @@ const mutations = {
             state.IPcode = cccInformation[0];
             state.IPcountry = cccInformation[1];
             state.IPcurrency = cccInformation[2];
+            for(var i=0;i<state.allCountry.length;i++){
+                if(state.IPcode == state.allCountry[i].code){
+                    state.currencyResult = state.allCountry[i].lc;
+                }
+            }
         }
     }
 }
